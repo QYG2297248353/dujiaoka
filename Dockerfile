@@ -1,7 +1,14 @@
 FROM webdevops/php-nginx:7.4
-COPY . /app
 WORKDIR /app
-RUN [ "sh", "-c", "composer install --ignore-platform-reqs" ]
-RUN echo "#!/bin/bash\nphp artisan queue:work >/tmp/work.log 2>&1 &\nsupervisord" > /app/start.sh
-RUN [ "sh", "-c", "chmod -R 777 /app" ]
-CMD [ "sh", "-c","/app/start.sh" ]
+COPY . /tmp/app-temp/
+RUN composer install --ignore-platform-reqs --working-dir=/tmp/app-temp
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod -R 777 /tmp/app-temp
+
+EXPOSE 80
+EXPOSE 9000
+
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
