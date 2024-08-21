@@ -5,8 +5,10 @@ WORKDIR /app
 COPY . /tmp/app-temp/
 
 RUN apt-get update \
-    && apt-get install -y rsync \
-    && apt-get install -y git unzip curl \
+    && apt-get install -y gnupg2 \
+    && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
+    && apt-get update \
+    && apt-get install -y rsync git unzip curl \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install --ignore-platform-reqs --working-dir=/tmp/app-temp
