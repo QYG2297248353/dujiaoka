@@ -11,7 +11,7 @@ fi
 
 cp -r $TEMP_DIR/* $TARGET_DIR/
 
-chown -R www-data:www-data $TARGET_DIR
+chmod -R 777 $TARGET_DIR
 
 php artisan queue:work >/tmp/work.log 2>&1 &
 exec supervisord
