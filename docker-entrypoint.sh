@@ -3,11 +3,13 @@
 TARGET_DIR="/app"
 TEMP_DIR="/tmp/app-temp"
 
-if [ ! -f "$TARGET_DIR/.env" ]; then
+if [ -f "$TARGET_DIR/.env" ]; then
+    echo ".env file exists, not overwriting."
+else
     cp $TEMP_DIR/.env $TARGET_DIR/
 fi
 
-rsync -av --exclude '.env' $TEMP_DIR/ $TARGET_DIR/
+cp -r $TEMP_DIR/* $TARGET_DIR/
 
 chown -R www-data:www-data $TARGET_DIR
 
