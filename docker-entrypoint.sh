@@ -9,6 +9,12 @@ else
     cp $TEMP_DIR/.env $TARGET_DIR/
 fi
 
+if [ -f "$TARGET_DIR/.env.example" ]; then
+    echo ".env.example file exists, not overwriting."
+else
+    cp $TEMP_DIR/.env.example $TARGET_DIR/
+fi
+
 cp -r $TEMP_DIR/* $TARGET_DIR/
 
 chmod -R 777 $TARGET_DIR
