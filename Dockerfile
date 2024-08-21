@@ -4,8 +4,12 @@ WORKDIR /app
 
 COPY . /tmp/app-temp/
 
-RUN apt-get update && apt-get install -y rsync \
-    && composer install --ignore-platform-reqs --working-dir=/tmp/app-temp
+RUN apt-get update \
+    && apt-get install -y rsync \
+    && apt-get install -y git unzip curl \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN composer install --ignore-platform-reqs --working-dir=/tmp/app-temp
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
