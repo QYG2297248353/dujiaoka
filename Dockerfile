@@ -12,4 +12,6 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 EXPOSE 80
 EXPOSE 9000
 
+VOLUME ["/app"]
+
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
