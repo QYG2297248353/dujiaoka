@@ -4,19 +4,10 @@ WORKDIR /app
 
 COPY . /tmp/app-temp/
 
-RUN apt-get update \
-    && apt-get install -y gnupg2 \
-    && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
-    && apt-get update \
-    && apt-get install -y rsync git unzip curl \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 RUN composer install --ignore-platform-reqs --working-dir=/tmp/app-temp
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-RUN chmod -R 777 /tmp/app-temp
 
 EXPOSE 80
 EXPOSE 9000
