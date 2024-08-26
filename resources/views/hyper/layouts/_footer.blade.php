@@ -3,9 +3,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-            	<div class="footer-links"></div>
-            </div>
-            <div class="col-md-6">
                 <div class="text-md-right footer-links d-none d-md-block">
                     {!! dujiaoka_config_get('footer') !!}
                 </div>
