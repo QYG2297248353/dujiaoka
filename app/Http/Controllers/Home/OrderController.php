@@ -104,8 +104,7 @@ class OrderController extends BaseController
             // 下单邮箱
             $this->orderProcessService->setEmail($request->input('email'));
             // ip地址
-            //$this->orderProcessService->setBuyIP($request->getClientIp());
-            $this->orderProcessService->setBuyIP(getRealClientIp($request));
+            $this->orderProcessService->setBuyIP($this->getRealClientIp($request));
             // 查询密码
             $this->orderProcessService->setSearchPwd($request->input('search_pwd', ''));
             // 创建订单
