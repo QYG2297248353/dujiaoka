@@ -44,6 +44,34 @@ class OrderController extends BaseController
     }
 
     /**
+     * 获取真实购买IP
+     *
+     * @param Request $request
+     *
+     * @author    MS
+     */
+    function getRealClientIp(Request $request)
+    {
+        $ip = $request->server('HTTP_X_FORWARDED_FOR');
+        
+        if ($ip && strpos($ip, ',') !== false) {
+            $ipArray = explode(',', $ip);
+            $ip = trim($ipArray[0]);
+        }
+    
+        if (!$ip) {
+            $ip = $request->server('HTTP_X_REAL_IP');
+        }
+    
+        if (!$ip) {
+            $ip = $request->getClientIp();
+        }
+    
+        return $ip;
+    }
+
+
+    /**
      * 创建订单
      *
      * @param Request $request
@@ -76,7 +104,8 @@ class OrderController extends BaseController
             // 下单邮箱
             $this->orderProcessService->setEmail($request->input('email'));
             // ip地址
-            $this->orderProcessService->setBuyIP($request->getClientIp());
+            //$this->orderProcessService->setBuyIP($request->getClientIp());
+            $this->orderProcessService->setBuyIP(getRealClientIp($request));
             // 查询密码
             $this->orderProcessService->setSearchPwd($request->input('search_pwd', ''));
             // 创建订单
