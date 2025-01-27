@@ -15,7 +15,7 @@ else
     cp $TEMP_DIR/.env.example $TARGET_DIR/
 fi
 
-cp -r $TEMP_DIR/* $TARGET_DIR/
+rsync -av --ignore-existing "$TEMP_DIR/" "$TARGET_DIR/"
 
 chmod -R 777 $TARGET_DIR
 
