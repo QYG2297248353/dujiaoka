@@ -2,6 +2,10 @@ FROM webdevops/php-nginx:7.4
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends rsync \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY . /tmp/app-temp/
 
 RUN chmod -R 777 /tmp/app-temp
