@@ -2,7 +2,8 @@ FROM webdevops/php-nginx:7.4
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends rsync \
+RUN apt-key adv --fetch-keys http://nginx.org/keys/nginx_signing.key \
+    && apt-get update && apt-get install -y --no-install-recommends rsync \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
